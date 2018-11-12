@@ -2,6 +2,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('prints', (table)=>{
     table.increments();
+    table.string('name');
     table.string('genre');
     table.string('series');
     table.integer('tier');
