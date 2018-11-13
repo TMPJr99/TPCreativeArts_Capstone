@@ -7,12 +7,7 @@ module.exports = {
      knex('painting')
      .then((result)=>{
        let painting = result[0];
-       res.render('contact', {painting, admin});
-     })
-  },
-
-  adminPg: (req, res)=>{
-    res.render('admin');
+       res.json(result)
   },
 
   login: (req, res)=>{
@@ -22,9 +17,9 @@ module.exports = {
 
       if(admin.password === req.body.password){
         req.session.admin_id = admin.id;
-        req.session.save(()=> res.redirect('/'))
+        req.session.save(()=> res.sendStatus(404))
       }else{
-        res.redirect('/admin');
+        res.sendStatus(200);
       }
     })
   },

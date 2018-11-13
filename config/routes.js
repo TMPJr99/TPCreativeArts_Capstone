@@ -1,7 +1,16 @@
 //Update the name of the controller below and rename the file.
-const template = require("../controllers/template.js")
+const prints = require("../controllers/prints.js")
+const order = require("../controllers/order.js")
+const admin = require("../controllers/admin.js")
 module.exports = function(app){
 
-  app.get('/', template.index);
 
+}
+
+function authenticate(req, res, next){
+  if(!req.session.admin_id){
+    res.redirect('/admin');
+  }else{
+    next();
+  }
 }
