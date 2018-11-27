@@ -1,39 +1,18 @@
 const knex = require("../db/knex.js");
 
 module.exports = {
-  // CHANGE ME TO AN ACTUAL FUNCTION
-  home: (req, res) => {
-    let admin = req.session.admin_id
-    if (!req.session.cart) {
-      req.session.cart = [];
-    }
-    if (!req.session.total) {
-      req.session.total = 0;
-    }
-    knex('painting').then((result) => {
-      res.json(result);
-    })
-  },
 
   shop: (req, res) => {
-    let admin = req.session.admin_id;
-    knex('painting')
+    knex('prints')
       .then((results) => {
-        let acc = [];
-        for(let i = 0; i < results.length; i++){
-          if(results[i].series !== "canvas"){
-            acc.push(results[i])
-          }
-        }
-        res.json(results);
+        res.json(results)
       })
   },
-
-  canvas: (req, res) => {
-    let admin = req.session.admin_id;
-    knex('painting').where('series', 'canvas')
+  single: (req, res) => {
+    knex('prints').where('prints.id', req.params.id)
+    .join('print_sizes', 'prints.sizes', 'print_sizes.id')
       .then((results) => {
-        res.json(results);
+        res.json(results[0])
       })
   },
 }

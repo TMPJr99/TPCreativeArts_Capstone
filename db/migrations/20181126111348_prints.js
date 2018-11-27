@@ -6,6 +6,11 @@ exports.up = function(knex, Promise) {
     table.string('genre');
     table.string('series');
     table.integer('tier');
+    table.integer('sizes')
+      .references('id')
+      .inTable('print_sizes')
+      .onDelete('CASCADE')
+      .index();
     table.string('img_location');
     table.timestamps(true, true);
   })
